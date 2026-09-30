@@ -10,6 +10,7 @@ public class Facture {
 
 
         System.out.println("Client : " + client);
+		System.out.println(quantite + " article(s) à " + prixUnitaire + " $");
 		System.out.println("Sous-total : " + sousTotal + " $");
         System.out.println("Total : " + total + " $");
     }
