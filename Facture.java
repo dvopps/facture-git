@@ -4,9 +4,11 @@ public class Facture {
         int prixUnitaire = 20;
         int quantite = 3;
 		int fraisLivraison = 5;
-        int total = prixUnitaire * quantite + fraisLivraison;
+        int sousTotal = prixUnitaire * quantite;
+        int total = sousTotal + fraisLivraison;
 
         System.out.println("Client : " + client);
+		System.out.println("Sous-total : " + sousTotal + " $");
         System.out.println("Total : " + total + " $");
     }
 }
