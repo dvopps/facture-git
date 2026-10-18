@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Facture {    
 
     private static void affciherFacture(String client, int quantite) {
@@ -13,5 +16,14 @@ public class Facture {
         affciherFacture("Client démonstration", 3);
 		System.out.println("----------");
         affciherFacture("Client fidèle", 6);
+        System.out.println(exporterJson("Client fidèle", 6));
+    }
+
+    static String exporterJson(String client, int quantite) {
+        int sousTotal = CalculFacture.calculerSousTotal(quantite);
+        int total = CalculFacture.calculerTotal(sousTotal);
+        ResumeFacture resume = new ResumeFacture(client, quantite, sousTotal, total);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(resume);
     }
 }
