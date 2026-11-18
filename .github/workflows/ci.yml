@@ -17,6 +17,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
+          cache: maven
 
       - name: Construire et tester
         run: ./mvnw -B verify
@@ -26,3 +27,15 @@ jobs:
         env:
           APP_ENV: test
           COMPTA_CLE: ${{ secrets.COMPTA_CLE }}
+
+      - name: Publier le JAR
+        uses: actions/upload-artifact@v7
+        with:
+          name: facture-jar
+          path: target/facture-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+      - name: Publier le rapport de couverture
+        uses: actions/upload-artifact@v7
+        with:
+          name: rapport-couverture
+          path: target/site/jacoco/
