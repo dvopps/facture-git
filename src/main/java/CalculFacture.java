@@ -1,4 +1,5 @@
 public class CalculFacture {
+    //Montant en dollars
     static final int PRIX_UNITAIRE = 20;
     static final int FRAIS_LIVRAISON = 5;
     static final int RABAIS_FIDELITE = 10;
