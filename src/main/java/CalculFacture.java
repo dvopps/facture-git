@@ -1,7 +1,8 @@
 public class CalculFacture {
+    //Montant en dollars
     static final int PRIX_UNITAIRE = 20;
     static final int FRAIS_LIVRAISON = 5;
-    static final int RABAIS_FIDELITE = 10;
+    static final int RABAIS_FIDELITE = 15;
     static final int SEUIL_LIVRAISON_GRATUITE = 100;
 
     static int calculerTotal(int sousTotal) {
