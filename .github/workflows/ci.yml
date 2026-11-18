@@ -23,3 +23,6 @@ jobs:
 
       - name: Lancer l'application
         run: java -jar target/facture-1.0-SNAPSHOT-jar-with-dependencies.jar
+        env:
+          APP_ENV: test
+          COMPTA_CLE: ${{ secrets.COMPTA_CLE }}
