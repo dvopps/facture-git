@@ -11,6 +11,7 @@ public class Facture {
         System.out.println("----------");
         afficherFacture("Client fidèle", 6);
         System.out.println("----------");
+        System.out.println("Version : " + System.getenv().getOrDefault("APP_VERSION", "dev"));
         System.out.println("Environnement : " + config.environnement());
         System.out.println("Envoi (simulé) vers : " + url);
         System.out.println("Clé d'API : " + masquer(cle));

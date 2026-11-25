@@ -39,3 +39,34 @@ jobs:
         with:
           name: rapport-couverture
           path: target/site/jacoco/
+
+  publier:
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/dvopps/facture
+      VERSION: ${{ github.run_number }}
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v6
+
+      - name: Récupérer le JAR testé
+        uses: actions/download-artifact@v8
+        with:
+          name: facture-jar
+          path: target
+
+      - name: Se connecter au registre
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" |
+            docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Construire l'image
+        run: docker build --build-arg VERSION=$VERSION -t $IMAGE:$VERSION .
+
+      - name: Publier l'image
+        run: docker push $IMAGE:$VERSION
