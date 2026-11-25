@@ -1,0 +1,35 @@
+name: Livraison
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Numéro de la version à livrer en production
+        required: true
+
+jobs:
+  livrer:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    env:
+      IMAGE: ghcr.io/dvopps/facture
+      VERSION: ${{ inputs.version }}
+    steps:
+      - name: Se connecter au registre
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" |
+            docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Récupérer la version demandée
+        run: docker pull $IMAGE:$VERSION
+
+      - name: Vérifier la version avec la configuration de production
+        run: docker run --rm -e APP_ENV=prod -e COMPTA_CLE $IMAGE:$VERSION
+        env:
+          COMPTA_CLE: ${{ secrets.COMPTA_CLE_PROD }}
+
+      - name: Marquer la version comme production
+        run: |
+          docker tag $IMAGE:$VERSION $IMAGE:production
+          docker push $IMAGE:production
